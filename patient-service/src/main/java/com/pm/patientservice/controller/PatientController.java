@@ -44,6 +44,8 @@ public class PatientController {
             @Validated({Default.class, CreatePatientValidationGroup.class})
             @RequestBody PatientRequestDTO patientRequestDTO) {
 
+        System.out.println("Received DTO: " + patientRequestDTO);
+
         PatientResponseDTO patientResponseDTO = patientService.createPatient(
                 patientRequestDTO);
 
