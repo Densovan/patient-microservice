@@ -31,12 +31,11 @@ public class PatientService {
 
     public List<PatientResponseDTO> getPatients() {
         List<Patient> patients = patientRepository.findAll();
-
+        System.out.print("Hello, Vanden!");
         return patients.stream().map(PatientMapper::toDTO).toList();
     }
 
     public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO) {
-
         if (patientRepository.existsByEmail(patientRequestDTO.getEmail())) {
             throw new EmailAlreadyExistsException(
                     "A patient with this email " + "already exists"
@@ -46,8 +45,10 @@ public class PatientService {
         Patient newPatient = patientRepository.save(
                 PatientMapper.toModel(patientRequestDTO));
 
-        billingServiceGrpcClient.createBillingAccount(newPatient.getId().toString(),
-                newPatient.getName(), newPatient.getEmail());
+        billingServiceGrpcClient.createBillingAccount(newPatient.getId().toString(),newPatient.getName(),newPatient.getEmail());
+
+//        billingServiceGrpcClient.createBillingAccount(newPatient.getId().toString(),
+//                newPatient.getName(), newPatient.getEmail());
 
 //        kafkaProducer.sendEvent(newPatient);
 
@@ -56,7 +57,7 @@ public class PatientService {
 
     public PatientResponseDTO updatePatient(UUID id,
                                             PatientRequestDTO patientRequestDTO) {
-
+        System.out.print("Hello, Vanden!");
         Patient patient = patientRepository.findById(id).orElseThrow(
                 () -> new PatientNotFoundException("Patient not found with ID: " + id));
 
@@ -66,6 +67,7 @@ public class PatientService {
                     "A patient with this email " + "already exists"
                             + patientRequestDTO.getEmail());
         }
+
 
         patient.setName(patientRequestDTO.getName());
         patient.setAddress(patientRequestDTO.getAddress());

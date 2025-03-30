@@ -34,6 +34,7 @@ public class PatientController {
     @GetMapping
     @Operation(summary = "Get Patients")
     public ResponseEntity<List<PatientResponseDTO>> getPatients() {
+        System.out.print("Hello, Vanden!");
         List<PatientResponseDTO> patients = patientService.getPatients();
         return ResponseEntity.ok().body(patients);
     }
@@ -43,7 +44,6 @@ public class PatientController {
     public ResponseEntity<PatientResponseDTO> createPatient(
             @Validated({Default.class, CreatePatientValidationGroup.class})
             @RequestBody PatientRequestDTO patientRequestDTO) {
-
 
         PatientResponseDTO patientResponseDTO = patientService.createPatient(
                 patientRequestDTO);
